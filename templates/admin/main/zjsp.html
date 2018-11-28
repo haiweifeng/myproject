@@ -1,0 +1,66 @@
+<style>
+	.t1{
+		text-align: right;
+		padding-right: 5px;
+		background-color: rgb(230,242,254);
+		width: 46%;
+		font-size: 12px;
+	}
+	.t2{
+		height: 30px;
+		padding-left: 42%;
+		
+	}
+	.t1,.t2{
+		height: 30px;
+	}
+</style>
+{% load static %}
+<script src="{% static 'js/jquery-1.7.1.min.js' %}"> </script>
+<script>
+    $(function () {
+        $("#subbutton").click(function () {
+             var text = $("#parentname").val();
+             console.log("hahah",text);
+            if(text){
+                var csrftoken = "{{csrf_token}}";
+                $.ajaxSetup({headers:{"X-CSRFToken":csrftoken}});
+                $.post('{% url 'myadmin:addparent' %}',
+                        "&parentclass="+text,
+                        function(aa){
+                            if(aa=="ok"){
+                                $("#note").text("上传成功！").css("display","block");
+                                $("#parentname").val("");
+                                setTimeout(fun1,1000);
+                                }else{
+                                 $("#note").text("类名重复了").css("display","block");
+                                setTimeout(fun1,1000);
+                            }
+
+                        })
+                }else{
+                alert("输入内容不能为空！")
+            }
+
+        function fun1() {
+            $("#note").css("display","none")
+        }
+        });
+        $("#clearinput").click(function () {
+            $("#parentname").val("")
+        })
+    })
+</script>
+<table border="1" cellspacing="0" style="width: 100%;border-color:rgba(180,207,207,0.4)">
+	<tr>
+		<td class="t1">父类名称：</td>
+		<td style="padding-left: 4px;"><input type="text" name="parentclass" id="parentname"/> <span id="note" style="display: none"></span></td>
+	</tr>
+	<tr>
+		<td class="t2" colspan="2">
+			<input type="button" value="提交"  id="subbutton"/>
+			<input type="button" value="重置" id="clearinput"/>
+
+		</td>
+	</tr>
+</table>

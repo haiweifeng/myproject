@@ -1,0 +1,87 @@
+<style>
+	.table1{
+		border-color:rgba(180,207,207,0.4);
+	}
+	.td1,.td2{
+		height: 36px;
+	}
+	.td1{
+		text-align: right;
+		padding-right: 5px;
+		background-color: rgb(230,242,254);
+		font-size: 14px;
+	}
+	.td2{
+		padding-left: 5px;
+	}	
+</style>
+{% load static %}
+<script src="{% static 'js/jquery-1.7.1.min.js' %}"> </script>
+<script>
+     $(function () {
+        $("#subbutton").click(function () {
+             var text = $("#childclass").val();
+             var val = $("#parentclass").val();
+             if(val == '0'){
+                 alert("请注意选择父类");
+                 return
+                 }
+             console.log("hahah",text);
+            if(text){
+                var csrftoken = "{{csrf_token}}";
+                $.ajaxSetup({headers:{"X-CSRFToken":csrftoken}});
+                $.post('{% url 'myadmin:addchild' %}',
+                        "parentid="+val+"&childclass="+text,
+                        function(aa){
+                            if(aa=="ok"){
+                                $("#note").text("上传成功！").css("display","block");
+                                $("#childclass").val("");
+                                 $("#parentclass").attr("value","0");
+                                setTimeout(fun1,1000);
+                                }else{
+                                 $("#note").text("类名重复了").css("display","block");
+                                setTimeout(fun1,1000);
+                            }
+
+                        })
+                }else{
+                alert("输入内容不能为空！")
+            }
+
+        function fun1() {
+            $("#note").css("display","none")
+        }
+        });
+        $("#clearbutton").click(function () {
+            $("#childclass").val("");
+            $("#parentclass").attr("value","0");
+        })
+    })
+</script>
+<table class="table1" border="1" cellspacing="0" width="1110px">
+	<tr>
+		<td class="td1">子类名称:</td>
+		<td class="td2"><input type="text"  id="childclass"/> <span id="note"></span></td>
+	</tr>
+	
+	
+	<tr>
+		<td class="td1">父类名称:</td>
+		<td class="td2">
+			<select id="parentclass">
+                <option value="0">-请选择-</option>
+                {% for parent in parents %}
+                    <option value="{{ parent.id }}">{{ parent.classname }}</option>
+                {% endfor %}
+
+
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 24%;" colspan="2">
+			<input type="button" value="提交" id="subbutton"/>
+			<input type="button" value="重置" id="clearbutton"/>
+		</td>
+	</tr>
+</table>

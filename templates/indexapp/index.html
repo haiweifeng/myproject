@@ -1,0 +1,238 @@
+{% extends 'super/super.html' %}
+    {% block content1 %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/theme_1.css' %}"/>
+        <link rel="Stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index-style.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/header_150803.css' %}"/>
+        <script type="text/javascript" src="{% static 'js/tab.js' %}"></script>
+        <script type="text/javascript">
+            function player1(id){
+            var id=document.getElementById(id)
+            id.style.display="block";
+            }
+            function clocer1(id){
+            var id=document.getElementById(id)
+            id.style.display="none";
+            }
+            </script>
+            <script type="text/javascript" src="{% static 'js/jquery1.4.2.js' %}"></script>
+            <script  type="text/javascript">
+                var firstbyteTime=new Date().getTime();
+                var firstScreenStartTime=new Date().getTime();
+                var mix_imglist=[];
+            </script>
+
+    {% endblock %}
+
+{% block content2 %}
+
+
+<div id="bd_auto" name="9149">
+  <div class="top_ad_banner"><a href="#"><img src="{% static 'images/1200x65_sk_1229.jpg' %}" width="1200" height="65" /></a></div>
+  <div class="con storey_one" name="9150">
+    <div class="col storey_one_left" name="9163">
+      <div class="sidemenu" name="m403752_pid0_t9141" dd_name="左侧分类" ddt-area="mix_403752" ddt-floor="mix_403752">
+        <div class="con flq_head" >图书分类</div>
+        <div class="con flq_body" >
+          <div class="level_one" >
+            <dl class="con primary_dl" >
+                {% for tt in total %}
+                    <dt class="con " name="m403752_pid5367_t10276"><a href="{% url 'index:booklistview' %}?parentid={{ tt.parent_id }}&id={{ tt.id }}"><span>{{ tt.classname }}</span></a></dt>
+                    <dd class="con sec_cate dd_level1" >
+                    {% for cc in child %}
+                        {% if cc.parent_id == tt.id %}
+                            <a  href="{% url 'index:booklistview' %}?id={{ cc.id }}&parentid={{ cc.parent_id }}" target="_blank" title="{{ cc.classname }}" class="" > {{ cc.classname }} </a>
+                        {% endif %}
+                    {% endfor %}
+                    </dd>
+                {% endfor %}
+            </dl>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="col storey_one_center" name="9164">
+      <div class="fl_w" >
+        <div id="banner_tabs" class="flexslider">
+          <ul class="slides">
+            <li> <a href="http://www.yuloo.com/slschool/gjgz/"> <img  src="{% static 'images/750x315_djj_1230.JPG' %}" width="750" height="315" alt=""> </a> </li>
+            <li> <a href="http://www.yuloo.com/slschool/international/"> <img  src="{% static 'images/750x315wen0103.jpg' %}" width="750" height="315" alt=""> </a> </li>
+            <li> <a href="http://www.yuloo.com/slschool/Primary/"> <img  src="{% static 'images/750x315wen0103.jpg' %}" width="750" height="315" alt=""> </a> </li>
+            <li> <a href="http://www.yuloo.com/slschool/junior/"> <img src="{% static 'images/750x315wen0103.jpg' %}" width="750" height="315" alt=""> </a> </li>
+          </ul>
+          <ul class="flex-direction-nav">
+            <li><a class="flex-prev">Previous</a></li>
+            <li><a class="flex-next">Next</a></li>
+          </ul>
+          <ul id="bannerCtrl" class="flex-control-nav flex-control-paging">
+            <li class="active"><a></a></li>
+            <li><a></a></li>
+            <li><a></a></li>
+            <li><a></a></li>
+          </ul>
+          <div class="adver_icon"></div>
+        </div>
+      </div>
+      <!-- End 焦点图 -->
+      
+      <div class="bys clearfix">
+        <div class="book_online_title" name="m403754_pid5292_t9125"></div>
+
+        <div id="slides01" class="center_shop clearfix">
+          <div class="auto1 clearfix" >
+            <ul class="slides_container clearfix">
+{#              新书上架展示#}
+              <li  >
+                {% for booknew in newbook %}
+                    <dl class="clearfix">
+                      <dt><a class="img" href="{% url 'index:bookview' %}?id={{ booknew.id }}" target="_blank"><img src="{% static  booknew.image %}" alt=""></a></dt>
+                      <dd>
+                        <p class="name" ><a title="" href="{% url 'index:bookview' %}?id={{ booknew.id }}" target="_blank" style=" ">{{ booknew.title }}</a></p>
+                        <p class="author"><span class="author_t"></span>{{ booknew.writer }}  著</p>
+                        <p class="price"><span class="rob"><span class="sign">￥</span><span class="num">{{ booknew.booklist__dangprice }}</span><span class="tail"></span></span><span class="price_r"><span class="sign">￥</span><span class="num" style="font-size: 12px;">{{ booknew.booklist__price }}</span><span class="tail"></span></span></p>
+                        <span style="background: url(http://img4.ddimg.cn/00035/pic/xsq.png) no-repeat 0px 0px; _background-image: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://img4.ddimg.cn/00035/pic/xsq.png',sizingMethod='noscale');" class="product_tags"></span></dd>
+                    </dl>
+
+                {% endfor %}
+              </li>
+            </ul>
+            <a href="#" class="prev">prev</a> <a href="#" class="next">next</a> </div>
+        </div>
+      </div>
+    </div>
+    <div class="col storey_one_right" name="9165">
+      <div class="con " name="9166">
+       
+        <div class="spacer"></div>
+      </div>
+      <script type="text/javascript" src="{% static 'js/jquery-latest.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/slides.min.jquery.js' %}"></script>
+      <div><a href="#"><img src="{% static 'images/199x178ts720.jpg' %}" width="240" height="195" /></a></div>
+      
+      <script type="text/javascript">
+    function player1(id){
+    var id=document.getElementById(id)
+    id.style.display="block";
+    }
+    function clocer1(id){
+    var id=document.getElementById(id)
+    id.style.display="none";
+    }
+    </script>
+    <div style="margin-top:14px; margin-bottom:23px;"><a href="#"><img src="{% static 'images/1yuan240-120.jpg' %}" width="240" height="105" /></a></div>
+      <div class="con " name="9168">
+        <div class="con title" name="m403757_pid0_t9121"> <a nname="book-65152-9168_1-473546_1" href="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1" target="_blank" title="新书热卖榜" class="hot_link" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1">新书热卖榜</a> </div>
+        <div class="head01">
+          <ul class="tab_aa">
+            <li id="two1" onmouseover="setTab('two',1,5)" class="hover"><a href="#" target="_blank" ><span>总榜</span></a></li>
+            
+          </ul>
+        </div>
+        <div class="bor_list_con">
+          <div  id="con_two_1" style="display:block;" >
+            <ul class="list01">
+                {% for booksell in newsellbook %}
+                   <li class= {% if forloop.counter == 1 %}
+                                "active"
+                {% endif %}> <span class="num num{{ forloop.counter }}">{{ forloop.counter }}</span>
+                    <div> <a class="list_name" href="{% url 'index:bookview' %}?id={{ booksell.id }}" target="_blank">{{ booksell.title }}:{{ booksell.writer }}2016年新书力作</a>
+                      <dl class="list_con clearfix">
+                        <dt><a href="{% url 'index:bookview' %}?id={{ booksell.id }}" target="_blank"><img src="{% static booksell.image %}" /></a></dt>
+                        <dd>
+                          <p class="name"><a href="{% url 'index:bookview' %}?id={{ booksell.id }}" target="_blank">{{ booksell.title }}:{{ booksell.writer }}2016年新书力作</a></p>
+                          <b>￥{{ booksell.booklist__dangprice }}</b><em>￥{{ booksell.booklist__price }}</em><a class="pl" href="#">112条评论</a></dd>
+                      </dl>
+                    </div>
+                  </li>
+
+                {% endfor %}
+                
+
+
+            </ul>
+          </div>
+          <a href="#" target="_blank" title="查看完整榜单>>" class="more_top" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-1"> 查看完整榜单&gt;&gt; </a> </div>
+      </div>
+      <script>$(document).ready(function() {
+            $list_li = $(".list01 li");
+            $list_li.eq(0).addClass("active");
+            $list_li.mouseover(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+           });
+        });</script>
+      <style>
+		.list_name{ display:block;}
+		.list_con{ display:none;}
+		.active .list_con{ display:block;}
+		.active div .list_name{ display:none;}
+        </style>
+    </div>
+  </div>
+{#主编推荐书籍#}
+  <div class="con storey_two" name="9151">
+    <div class="col storey_two_left" name="9161">
+    <div class="book_online_title1" name="m403754_pid5292_t9125"></div>
+         <script type="text/javascript">
+		$(function(){
+			$('#slides02').slides({
+				effect: 'slide02'
+			});
+		})
+	</script>
+        <div id="slides02" class="center_shop clearfix">
+          <div class="auto1 clearfix" >
+            <ul class="slides_container clearfix">
+              <li>
+                  {% for editbook in editsupportbook %}
+                      <dl class="clearfix">
+                      <dt><a class="img" href="{% url 'index:bookview' %}?id={{ editbook.book_infor__id }}" target="_blank"><img src="{% static editbook.book_infor__image %}" alt=""></a></dt>
+                      <dd>
+                        <p class="name" ><a title="" href="{% url 'index:bookview' %}?id={{ editbook.book_infor__id }}" target="_blank" style=" ">{{ editbook.book_infor__title }}</a></p>
+                        <p class="author"><span class="author_t"></span>{{ editbook.book_infor__writer }}  著</p>
+                        <p class="price"><span class="rob"><span class="sign">￥</span><span class="num">{{ editbook.dangprice }}</span><span class="tail"></span></span><span class="price_r"><span class="sign">￥</span><span class="num" style="font-size: 12px;">{{ editbook.price }}</span><span class="tail"></span></span></p>
+                        <span style="background: url(http://img4.ddimg.cn/00035/pic/xsq.png) no-repeat 0px 0px; _background-image: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://img4.ddimg.cn/00035/pic/xsq.png',sizingMethod='noscale');" class="product_tags"></span></dd>
+                    </dl>
+
+                  {% endfor %}
+              </li>
+            </ul>
+            <a href="#" class="prev">prev</a> <a href="#" class="next">next</a> </div>
+        </div>
+      <div class="spacer"></div>
+    </div>
+    <div class="col storey_two_right">
+      <div class="con " name="9168">
+        <div class="con title" name="m403757_pid0_t9121"> <a nname="book-65152-9168_1-473546_1" href="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1" target="_blank" title="新书推荐榜" class="hot_link" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1">新书推荐榜</a> </div>
+        <div class="head01">
+          <ul class="tab_aa">
+            <li id="four1" onmouseover="setTab('four',1,5)" class=""><a href="#" target="_blank"><span>总榜</span></a></li>
+          </ul>
+        </div>
+        <div class="bor_list_con">
+          <div id="con_four_1">
+            <ul class="list01">
+                {% for booksup in newsupportbook %}
+                    <li class={% if forloop.counter == 1 %}
+                                "active"
+                {% endif %}> <span class="num num{{ forloop.counter }}">{{ forloop.counter }}</span>
+                        <div> <a class="list_name" href="{% url 'index:bookview' %}?id={{ booksup.book_infor__id }}" target="_blank">{{ booksup.book_infor__title }}：{{ booksup.book_infor__writer }}2016年新书力作</a>
+                          <dl class="list_con clearfix">
+                            <dt><a href="{% url 'index:bookview' %}?id={{ booksup.book_infor__id }}" target="_blank"><img src="{% static booksup.book_infor__image %}"></a></dt>
+                            <dd>
+                              <p class="name"><a href="{% url 'index:bookview' %}?id={{ booksup.book_infor__id }}" target="_blank">{{ booksup.book_infor__title }}：{{ booksup.book_infor__writer }}2016年新书力作</a></p>
+                              <b>￥{{ booksup.dangprice }}</b><em>￥{{ booksup.price }}</em><a class="pl" href="#">112条评论</a></dd>
+                          </dl>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+          </div>
+          <a href="#" target="_blank" title="查看完整榜单>>" class="more_top" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-1"> 查看完整榜单&gt;&gt; </a> </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

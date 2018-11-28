@@ -1,0 +1,101 @@
+<style>
+	.table1{
+		border-color: lightgray;
+	}
+	.td1,.td2{
+		height: 36px;
+	}
+	.td1{
+		text-align: right;
+		padding-right: 5px;
+		background-color: rgb(230,242,254);
+		font-size: 14px;
+	}
+	.td2{
+		padding-left: 5px;
+	}
+</style>
+{% load static %}
+<script src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+<script>
+
+</script>
+<form action="{% url 'myadmin:addlog' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<table class="table1" border="1" cellspacing="0" width="1110px">
+	<tr>
+		<td class="td1">书籍名称:</td>
+		<td class="td2"><input type="text" name="title"/></td>
+	</tr>
+    <tr>
+		<td class="td1">书籍图片:</td>
+		<td class="td2"><input type="file" name="headimg"/></td>
+	</tr>
+	<tr>
+		<td class="td1">作者:</td>
+		<td class="td2"><input type="text" name="writer"/></td>
+	</tr>
+	<tr>
+		<td class="td1">出版社:</td>
+		<td class="td2"><input type="text" name="press"/></td>
+	</tr>
+	<tr>
+		<td class="td1">商品父类:</td>
+		<td class="td2">
+			<select name="classname">
+                {% for parent in parentclass %}
+                <option value="{{ parent.id }}" style="font-weight: 800;"disabled="disabled">-{{ parent.classname }}-</option>
+                    {% for child in childclass %}
+                        {% if child.parent_id == parent.id %}
+                            <option value="{{ child.id }}">-{{ child.classname }}-</option>
+                        {% endif %}
+                    {% endfor %}
+
+                {% endfor %}
+
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="td1">出版日期:</td>
+		<td class="td2">
+			<input type="date" name="pubtime"/>
+		</td>
+	</tr>
+    <tr>
+		<td class="td1">字数:</td>
+		<td class="td2"><input type="text"  name="words"/></td>
+	</tr>
+    <tr>
+		<td class="td1">页数:</td>
+		<td class="td2"><input type="text" name="pages"/></td>
+	</tr>
+		<tr>
+		<td class="td1">印刷时间:</td>
+		<td class="td2">
+			<input type="date" name="printtime"/>
+		</td>
+	</tr>
+		<tr>
+		<td class="td1">市场价:</td>
+		<td class="td2">
+			<input type="text" name="price"/>
+		</td>
+	</tr>
+		<tr>
+		<td class="td1">当当价:</td>
+		<td class="td2">
+			<input type="text" name="dangprice"/>
+		</td>
+	</tr>
+		<tr>
+		<td class="td1">库存:</td>
+		<td class="td2">
+			<input type="text" name="inventory"/>
+		</td>
+	</tr>
+    <tr style="text-align: center">
+		<td class="" colspan="2"><input type="submit" value="上传" id="subbutton"/></td>
+	</tr>
+</table>
+    </form>

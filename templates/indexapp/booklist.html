@@ -1,0 +1,244 @@
+{% extends 'super/super.html' %}
+{% block content1 %}
+    {% load mytags %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/category_pub.css' %}" />
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/header_150803.css' %}"/>
+
+    <script type="text/javascript" src="{% static 'js/tab.js' %}"></script>
+    <script type="text/javascript">
+    function player1(id){
+    var id=document.getElementById(id)
+    id.style.display="block";
+    }
+    function clocer1(id){
+    var id=document.getElementById(id)
+    id.style.display="none";
+    }
+    </script>
+
+    <script  type="text/javascript">
+        var firstbyteTime=new Date().getTime();
+        var firstScreenStartTime=new Date().getTime();
+        var mix_imglist=[];
+    </script>
+        <script src="{% static 'js/jquery-latest.js' %}"></script>
+        <script>
+            $(function () {
+                var hit =null;
+                var sort = {{ sort }};
+                $(".st1").eq(sort).attr("class","st1 on ").siblings().attr("class","st1");
+              $(".st1").click(function () {
+                  $(".st1").attr("class","st1");
+                  $(this).attr("class","st1 on");
+                  location.href = "{% url 'index:booklistview' %}?id={{ id }}&parentid={{ parentid }}&sort="+$(this).index();
+              });
+              $(".listbtn_buy").click(function () {
+                 bookid=$(this).next().next().text();
+                var csrftoken = "{{csrf_token}}";
+                $.ajaxSetup({headers:{"X-CSRFToken":csrftoken}});
+                $(this).css("display","none");
+                hit = $(this);
+                $.post('{% url 'index:caradd' %}',
+                         "number=1&bookid="+bookid,
+                         function(aa){
+                            if(aa=="ok"){
+                                function fun1() {
+                                    hit.css("display","inline-block")
+                                }
+                                setTimeout(fun1,2000);
+                                }else{
+                                alert("发送失败！")
+                            }
+
+            })
+            })
+            });
+
+
+    </script>
+{% endblock %}
+{% block content2 %}
+
+
+<div id="bd_auto" name="9149">
+              <div class="top_ad_banner"><a href="#"><img src="{% static 'images/1200x65_sk_1229.jpg' %}" width="1200" height="65" /></a></div>
+              <div class="breadcrumb" id="B"> <a href="http://www.dangdang.com">当当</a> <span>&gt;</span> <a href="{% url 'index:view' %}" name="B">图书</a><span>&gt;</span>
+                  <a href="{% url 'index:booklistview' %}?id={{ bookparent.id }}&parentid=0" name="B">{{ bookparent.classname }}</a><span>&gt;</span>
+                  <span class="current" style="color: blue">{% if  not parentid == '0' %}
+                  {{ bookchild.0.classname }}
+                  {% endif %}</span>
+                
+  </div>
+              <div class="col aside" name="4931">
+    <div class="" name="m142905_pid0_t4824">
+                  <div class="col storey_one_left" name="9163">
+      <div class="sidemenu" name="m403752_pid0_t9141" dd_name="左侧分类" ddt-area="mix_403752" ddt-floor="mix_403752">
+        <div class="con flq_head" >图书分类</div>
+        <div class="con flq_body" >
+          <div class="level_one" >
+            <dl class="con primary_dl" >
+                {% for tt in total %}
+                    <dt class="con " name="m403752_pid5367_t10276"><a href="{% url 'index:booklistview' %}?parentid={{ tt.parent_id }}&id={{ tt.id }}"><span>{{ tt.classname }}</span></a></dt>
+                        <dd class="con sec_cate dd_level1" >
+                            {% for cc in child %}
+                                {% if cc.parent_id == tt.id %}
+                                    <a  href="{% url 'index:booklistview' %}?id={{ cc.id }}&parentid={{ cc.parent_id }}" title="{{ cc.classname }}" class="" > {{ cc.classname }} </a>
+                                {% endif %}
+                            {% endfor %}
+                    </dd>
+                {% endfor %}
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+                </div>
+   
+  </div>
+              <div class="col article">
+    
+    <div class="bk_sort" name="Sort">
+                  <div id="component_281329"></div>
+                  <div class="con tools_box">
+        <div class="con top">
+                      <div class="col ">
+            <div class="t">排序：</div>
+            <ul class="sorting_box" name="Sort">
+                          <li class="st1 on" id="MO">
+                <div  title="默认排序" name="Mo">默认排序</div>
+              </li>
+                          <li class="st1 " id="XL">
+                <div name="Xl"  title="销量由高到低"> 销量<span class="icon"></span></div>
+              </li>
+                          <li class="st1 " id="JG">
+                <div name="Jg"  title="价格由低到高" >价格<span class="icon icon_t"></span></div>
+              </li>
+                          <li class="st1 " id="OT" >
+                <div name="OT"  title="出版时间由近到远" >出版时间<span class="icon"></span></div>
+              </li>
+                        </ul>
+
+
+
+
+
+
+            <div class="select_box" name="Xl"><span class="d">默认排序</span><span class="arrow"></span>
+                          <div class="select_pop" style="display: none;">
+                <ul>
+                              <li class="on"><a name="Mo" href="">默认排序</a></li>
+                              <li class=""><a name="Xl" href="">按销量降序<span class="up"></span></a></li>
+                              <li class=""><a name="Jg" href="">按价格升序<span class="down"></span></a></li>
+                              <li class=""><a name="Jg" href="">按价格降序<span class="up"></span></a></li>
+
+                              <li class=""><a name="OT" href="">出版时间降序<span class="up"></span></a></li>
+                            </ul>
+              </div>
+                        </div>
+           </div>
+                      <div class="col "> 
+            <!--<div class="t_s">价格：</div>
+<div class="interval" id="prices" name="Jgsx">
+    <div class="inner">
+        <input type='text' class='text' value='' name='low_price' id='input_lowp'/>-<input type='text' class='text' value='' name='high_price' id='input_highp'/>        <div><input type="button" class="button" value="清除" id="btn_cls" name="Price"/><input type="button" class="button btn_yes " value="确定" id="btn_yes" name="Price" /></div>
+    </div>
+</div>-->
+            
+          </div>
+                      <div class="col ">
+            <div class="data" name="Fy">共<span>{{ allapge.count }}</span>个商品
+            {% if pages.has_previous %}
+                    <a href="{% url 'index:booklistview' %}?num={{ pages.previous_page_number}}&id={{ id }}&parentid={{ parentid }}" class="arrow_l arrow_l_on"></a>
+                    {% else %}
+                    <a  class="arrow_l "></a>
+        {% endif %}
+
+                <span class="or">{{ pages.number }}</span><span>/{{ pages.paginator.num_pages }}</span>
+                    {% if pages.has_next %}
+                    <a href="{% url 'index:booklistview' %}?num={{ pages.next_page_number}}&id={{ id }}&parentid={{ parentid }}" class="arrow_r arrow_r_on"></a> </div>
+                    {% else %}
+                    <a class="arrow_r   "></a>
+                    {% endif %}
+
+          </div>
+                    </div>
+        
+      </div>
+                </div>
+  </div>
+              <div class="book_shoplist" dd_utopia="on" name="Product">
+    <div id="component_2963524"></div>
+    <div class="con shoplist">
+                  <ul class="list_aa listimg" id="component_0__0__3058">
+                      {% for page in pages %}
+                           <li class="line1" id="23668351">
+                              <div class="inner"> <a title=" {{ page.book__title }} " class="pic" href="{% url 'index:bookview' %}?id={{ page.book__id }}" target="_blank"><img src="{% static page.book__image %}" alt=" {{ page.book__title }} "></a>
+                            <p class="name"><a title=" {{ page.book__title }} " href="{% url 'index:bookview' %}?id={{ page.book__id }}" target="_blank"> {{ page.book__title }} </a></p>
+                            <p class="star"><span class="level"><span style="width: 100%;"></span></span><a href="#" target="_blank" name="P_pl">163281条评论</a></p>
+                            <div class="publisher_info">
+                                  <p class="author"><span></span><a href="#" name="P_zz" title="{{ page.book__writer }}">{{ page.book__writer }}</a></p>
+                                  <p class="publishing_time"><span></span>/ {{ page.book__printtime }} </p>
+                                  <p class="publishing"><span></span>/ <a href="#" name="P_cbs" title="{{ page.book__press }}">{{ page.book__press }}</a></p>
+                                </div>
+                            <p class="detail"> 1、「一个」app人气冠军，90后实力写作者，继年度畅销书{{ page.book__title }}后，{{ page.book__writer }}全新力作，带来温暖人心的个人故事集。12个温馨治愈的情感故事，给年轻人爱的正能量和信心。电影版权火热接洽中，不久的将来你将会在大屏幕上再次与这些故事相逢。
+
+
+                                  2、{{ page.book__writer }}的文字，在微博、豆瓣、人人等文艺平台广受欢迎，百万微博粉丝，他的文字被阅读过100，000，000次，在微博被累计转发1，000，000次，在「一个」app上被分享收藏超过2，000，000次，他的作品被人民日报、人民网微博多次转载，成为90后作家中的励志榜样，给无数年轻人带去力量。
+
+
+                                  3、韩寒监制并微博推荐，「一个」工作室开年力作，重磅主打&nbsp;。
+
+
+                                  4、这本书可以送给自己，亦可作为礼物，送给你在乎的人，有了ta，世界才完整。随书附赠张皓宸私密手写寄语明信片。
+
+
+                                  5、内文插画元素由{{ page.book__writer }}亲自手绘，摄影图由「一个」app众多优秀首页图作者提供，装帧设计由「一个」工作室王牌设计师陆骏璇倾情打造。 </p>
+                                  <p class="dang" style="display: block;">当当自营</p>
+                                  <p class="buy_button"><a class="listbtn_info" name="area_buy" dd_name="查看详情" href="{% url 'index:bookview' %}?id={{ page.book__id }}" >查看详情</a></p>
+                                  <p class="price"> <span class="price_n">￥{{ page.book__booklist__dangprice }}</span><a style="color: #878787;text-decoration:none;">定价：</a><span class="price_r">￥{{ page.book__booklist__price }}</span>(<span class="price_s">{% discount page.book__booklist__dangprice page.book__booklist__price  %}折</span>)</p>
+                                  <div class="ebook_buy"><p class="buy_button"><a class="listbtn_buy" id="A13" dd_name="加入购物车" href="javascript:" name="Buy"></a><span class="addsucess"></span><span style="display: none">{{ page.book__id }}</span></p>
+                                   </div>
+                                    <p class="subtitle"> （一个App人气冠军{{ page.book__writer }}全新个人故事集，温馨治愈的情感故事，让你在面对爱时无惧，怀疑爱时坚定。随书附赠{{ page.book__writer }}私密手写寄语明信片） </p>
+                                  </div>
+                                    </li>
+                      {% empty %}
+                          <a title="" href="{% url 'index:view' %}" style="color: blue;font-size: 15px;"> 对不起，该类别暂时没有商品,点击回到首页>></a>
+                      {% endfor %}
+      </ul>
+                </div>
+                <div class="" name="m2963520_pid0_t3989"><div id="component_2963520"></div><div class="con paginating" name="m2963520_pid0_t3990"><script type="text/javascript" src=""></script>
+<ul class="paging" name="Fy">
+            {% if pages.has_previous %}
+                    <li class="prev " ><a  href="{% url 'index:booklistview' %}?num={{ pages.previous_page_number}}&id={{ id }}&parentid={{ parentid }}" >上一页</a></li>
+                    {% else %}
+                    <li class="prev none" ><a >上一页</a></li>
+        {% endif %}
+
+                    {% for num in pages.paginator.page_range %}
+                        <li><a href="{% url 'index:booklistview' %}?num={{ num }}&id={{ id }}&parentid={{ parentid }}" {% if num == pages.number %}
+                    class=" current"
+            {% else %}
+            class="null"
+        {% endif %}>{{ num }}</a></li>
+                    {% empty %}
+                        <li>暂无数据</li>
+                    {% endfor %}
+
+        {% if pages.has_next %}
+                    <li class="next"><a href="{% url 'index:booklistview' %}?num={{ pages.next_page_number}}&id={{ id }}&parentid={{ parentid }}">下一页</a></li>
+                    {% else %}
+                    <li class="next none"><a>下一页</a></li>
+        {% endif %}
+             <form action="{% url 'index:booklistview' %}" style="display: inline">
+            <li class="page_input"><span>共{{ pages.paginator.num_pages }}页 到第</span>
+                <input id="t__cp" type="text" class="number" value="1" name="num">
+                <span>页</span>
+        <input class="button" id="click_get_page" value="确定" type="submit" >
+            </li></form>
+</ul>
+</div></div>
+  </div>
+            </div>
+{% endblock %}

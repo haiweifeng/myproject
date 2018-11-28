@@ -1,0 +1,154 @@
+<style>
+	.d1{
+		background-color: rgb(53,60,68);
+		position: relative;
+		height: 30px;
+		line-height: 30px;
+		padding-left: 10px;
+	}
+	.s1{
+		font-size: 12px;
+		color: white;
+	}
+	.s2{
+		position: absolute;
+		right: 10px;
+	}
+	.s2 a{
+		color: white;
+		font-size: 12px;
+		text-decoration: none;
+	}
+	.t1{
+		border-color:aliceblue;
+		margin-top: 2px;
+		font-size: 12px;
+		text-align: center;
+		background-color: rgb(230,242,254);
+	}
+	.bottom{
+		font-size: 13px;
+		padding-left: 15px;
+		position: relative;
+	}
+	.bs{
+		position: absolute;
+		right: 40px;
+	}
+	.bs a{
+		text-decoration: none;
+		color: black;
+	}
+	.bs a:hover{
+		color: cornflowerblue;
+		text-decoration: underline;
+	}
+    .self{
+      width: 400px;
+      height: 250px;
+      display: none;
+      position: absolute;
+      left:450px;
+      top:200px;
+      z-index: 5;
+      background: gray;
+      text-align: center;
+    }
+    .bd{
+      margin: 5px;
+      border:2px solid #ccc;
+      height: 236px;
+    }
+    .bd span{
+      color:purple;
+      float:right;
+      cursor: pointer;
+    }
+</style>
+{% load static %}
+<script src="{% static 'js/jquery-1.7.1.min.js' %}"> </script>
+<script>
+{#    $(function () {#}
+{#        var bookclass = null;#}
+{#        $(".notebutton").click(function () {#}
+{#            $(".self").css({"display":"block"});#}
+{#            var orderid = $(this).next().text();#}
+{#            var csrftoken = "{{csrf_token}}";#}
+{#            $.ajaxSetup({headers:{"X-CSRFToken":csrftoken}});#}
+{#            $.post('{% url 'myadmin:orderlistview' %}',#}
+{#                "orderid="+orderid,#}
+{#                function(aa){#}
+{#                console.log("aa",aa);#}
+{#                    $.each(aa,function (pp) {#}
+{#                        $("#table2").append("<tr> <td>"+pp.order_id+"</td> <td>"+pp.book_id__title+"</td> <td>"+pp.dangprice+"</td> <td>"+pp.count+"</td> </tr>")#}
+{#                    });#}
+{##}
+{#            })#}
+{#    });#}
+{#        $("#span").click(function(){#}
+{#      		$(".self").css({"display":"none"})#}
+{#      	})#}
+{#    })#}
+</script>
+<div class="d1">
+	<span class="s1">订单管理</span>
+	<span class="s2">
+		<a href="#">添加</a>
+		<a href="#">删除</a>
+	</span>
+</div>
+<table border="2" width="100%" cellspacing="0" class="t1" >
+	<tr>
+
+		<td>订单ID</td>
+		<td>用户名</td>
+		<td>订单金额</td>
+		<td>收件人姓名</td>
+		<td>手机</td>
+		<td>电话</td>
+		<td>详细地址</td>
+		<td>创建时间</td>
+{#		<td>详情</td>#}
+	</tr>
+{% for page in pages %}
+    <tr>
+    <td>{{ page.id }}</td>
+    <td>{{ page.order_user__username }}</td>
+    <td>{{ page.totalprice }}</td>
+    <td>{{ page.name }}</td>
+    <td>{{ page.cellphone }}</td>
+    <td>{{ page.phone }}</td>
+    <td>{{ page.address }}</td>
+    <td>{{ page.ordertime}}</td>
+{#    <td><a href="#" class="notebutton">详情</a> <span style="display: none">{{ page.id }}</span></td>#}
+    <td></td>
+    </tr>
+{% endfor %}
+
+</table>
+<div class="self">
+    <div class="bd">
+    <span id="span">close</span>
+     <br><br>
+        <table border="2" width="100%" cellspacing="0" class="t1" id="table2">
+            <tr>
+                <td>订单号</td>
+                <td>书籍名</td>
+                <td>当当价</td>
+                <td>数量</td>
+            </tr>
+        </table>
+     </div>
+  </div>
+<div class="bottom">
+	共有{{ allpage.count }}                                                                                               条记录，当前第 {{ pages.number }}页，共 {{ pages.paginator.num_pages }}页
+	<span class="bs">
+		{% if pages.has_previous %}
+            <a href="{% url 'myadmin:orderlist' %}?num={{ pages.previous_page_number }}" style="margin-right: 20px;">上一页</a>
+        {% endif %}
+
+		{% if pages.has_next %}
+		    <a href="{% url 'myadmin:orderlist' %}?num={{ pages.next_page_number }}">下一页</a>
+		{% endif %}
+	</span>
+</div>
